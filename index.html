@@ -582,6 +582,60 @@
     .letter-greeting{font-size:17px;}
   }
 
+
+  /* ===== FIX KHUSUS HALAMAN SURAT: SCROLL PENUH DI HP & DESKTOP ===== */
+  body.letter-mode{
+    height:auto;
+    min-height:100vh;
+    overflow-y:auto;
+    overflow-x:hidden;
+    display:block;
+  }
+
+  body.letter-mode .stage{
+    height:auto;
+    min-height:100vh;
+  }
+
+  body.letter-mode #scene-letter{
+    position:relative;
+    inset:auto;
+    display:flex;
+    width:100%;
+    min-height:100vh;
+    height:auto;
+    max-width:none;
+    overflow:visible;
+    justify-content:flex-start;
+    align-items:center;
+    padding-top:28px;
+    padding-bottom:140px;
+  }
+
+  body.letter-mode #scene-letter .letter-card{
+    flex:0 0 auto;
+    width:clamp(300px, 92vw, 720px);
+    height:auto;
+    min-height:0;
+    max-height:none;
+    overflow:visible;
+  }
+
+  @media (max-width:520px){
+    body.letter-mode #scene-letter{
+      padding-top:20px;
+      padding-bottom:140px;
+    }
+
+    body.letter-mode #scene-letter .letter-card{
+      width:94vw;
+      height:auto;
+      min-height:0;
+      max-height:none;
+      overflow:visible;
+    }
+  }
+
   @media (prefers-reduced-motion: reduce){
     .scene{ transition:none; }
     #meterFill{ transition:none; }
@@ -783,6 +837,8 @@
   function goTo(scene){
     const target = document.getElementById('scene-' + scene);
     if(!target) return;
+
+    document.body.classList.toggle('letter-mode', scene === 'letter');
 
     document.querySelectorAll('.scene').forEach(s => s.classList.remove('active'));
     target.classList.add('active');
@@ -999,6 +1055,7 @@
 
   /* ---------- Surprise letter ---------- */
   function openLetter(){
+    document.body.classList.add('letter-mode');
     const envelope = document.getElementById('envelope');
     if(envelope.classList.contains('open')) return;
     envelope.classList.add('open');
