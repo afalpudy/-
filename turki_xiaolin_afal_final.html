@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>给小璘的一封信 💌</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FFF3EF;
+    --plum:#3D1B33;
+    --rose:#E85C7B;
+    --rose-deep:#C93F62;
+    --rose-light:#FFD9E1;
+    --gold:#F2A65A;
+    --white:#FFFFFF;
+  }
+
+  *{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+
+  html, body{ height:100%; }
+
+  body{
+    margin:0;
+    height:100dvh;
+    background:
+      radial-gradient(circle at 15% 20%, #ffe3da 0%, transparent 45%),
+      radial-gradient(circle at 85% 80%, #ffd7e2 0%, transparent 45%),
+      var(--cream);
+    font-family:'Quicksand', sans-serif;
+    color:var(--plum);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+    position:relative;
+  }
+
+  /* ---------- Ambient floating decorations ---------- */
+  .bg-hearts{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    overflow:hidden;
+    z-index:0;
+  }
+  .bg-hearts span{
+    position:absolute;
+    bottom:-10%;
+    font-size:18px;
+    opacity:0.4;
+    animation:floatUp linear infinite;
+  }
+  .bg-hearts img{
+    position:absolute;
+    bottom:-15%;
+    width:30px;
+    height:30px;
+    object-fit:contain;
+    opacity:0.55;
+    animation:floatUp linear infinite;
+    filter:drop-shadow(0 2px 5px rgba(201,63,98,0.25));
+  }
+  @keyframes floatUp{
+    to{ transform:translateY(-125vh) rotate(25deg); opacity:0; }
+  }
+
+  h1,h2,h3{
+    font-family:'Baloo 2', sans-serif;
+    margin:0;
+  }
+
+  .stage{
+    position:relative;
+    z-index:1;
+    width:100%;
+    max-width:460px;
+    height:100%;
+  }
+
+  .scene{
+    position:absolute;
+    inset:0;
+    display:none;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    gap:20px;
+    opacity:0;
+    transform:scale(0.94);
+    transition:opacity 0.5s ease, transform 0.5s ease;
+    overflow-y:auto;
+    -webkit-overflow-scrolling:touch;
+    padding:calc(28px + env(safe-area-inset-top)) 20px calc(28px + env(safe-area-inset-bottom));
+  }
+
+  .scene.active{
+    display:flex;
+    opacity:1;
+    transform:scale(1);
+  }
+
+  /* ---------- Corner stickers (GIF) ---------- */
+  .corner-sticker{
+    position:absolute;
+    width:54px;
+    height:54px;
+    object-fit:contain;
+    pointer-events:none;
+    animation:bobble 3s ease-in-out infinite;
+    filter:drop-shadow(0 4px 10px rgba(201,63,98,0.3));
+    z-index:2;
+  }
+  .corner-sticker.tl{ top:16px; left:12px; }
+  .corner-sticker.tr{ top:16px; right:12px; animation-delay:0.6s; }
+  @keyframes bobble{
+    0%,100%{ transform:translateY(0) rotate(-6deg); }
+    50%{ transform:translateY(-10px) rotate(6deg); }
+  }
+
+  /* ---------- Sparkle title ---------- */
+  .sparkle-wrap{ position:relative; display:inline-block; }
+  .title.sparkle{
+    animation:titleGlow 2.2s ease-in-out infinite;
+  }
+  @keyframes titleGlow{
+    0%,100%{ text-shadow:0 0 0px rgba(232,92,123,0); }
+    50%{ text-shadow:0 0 16px rgba(232,92,123,0.4); }
+  }
+  .spark{
+    position:absolute;
+    font-size:14px;
+    animation:twinkle 1.6s ease-in-out infinite;
+    pointer-events:none;
+  }
+  @keyframes twinkle{
+    0%,100%{ opacity:0; transform:scale(0.5) rotate(0deg); }
+    50%{ opacity:1; transform:scale(1.1) rotate(20deg); }
+  }
+
+  /* ---------- Love meter (signature element) ---------- */
+  .meter-wrap{
+    position:relative;
+    width:110px;
+    height:100px;
+  }
+  .meter-wrap svg{ position:absolute; inset:0; width:100%; height:100%; }
+  #meterFill{
+    transition:transform 0.8s cubic-bezier(.34,1.56,.64,1);
+    transform:translateY(100%);
+    transform-box:fill-box;
+    transform-origin:bottom;
+  }
+  .meter-label{
+    font-family:'Baloo 2', sans-serif;
+    font-size:13px;
+    color:var(--rose-deep);
+    letter-spacing:0.5px;
+  }
+
+  /* ---------- Buttons ---------- */
+  button{
+    font-family:'Baloo 2', sans-serif;
+    font-size:16px;
+    border:none;
+    border-radius:999px;
+    padding:14px 30px;
+    cursor:pointer;
+    background:var(--rose);
+    color:var(--white);
+    box-shadow:0 6px 0 var(--rose-deep);
+    transition:transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  button:active{ transform:translateY(4px); box-shadow:0 2px 0 var(--rose-deep); }
+  button:hover{ filter:brightness(1.05); }
+
+  .opt-btn{
+    background:var(--white);
+    color:var(--plum);
+    box-shadow:0 4px 0 #e8c9c0;
+    width:100%;
+    text-align:left;
+    padding:14px 20px;
+    font-family:'Quicksand', sans-serif;
+    font-weight:600;
+    font-size:15px;
+  }
+  .opt-btn:hover{ background:var(--rose-light); }
+
+  .options{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    width:100%;
+    max-width:340px;
+  }
+
+  /* ---------- Intro / Song ---------- */
+  .eyebrow{
+    font-family:'Baloo 2', sans-serif;
+    font-size:13px;
+    letter-spacing:2px;
+    color:var(--rose-deep);
+    text-transform:uppercase;
+  }
+  .title{
+    font-size:34px;
+    color:var(--plum);
+    line-height:1.15;
+  }
+
+  .song-box{
+    width:100%;
+    max-width:320px;
+    background:var(--white);
+    border-radius:20px;
+    padding:14px;
+    box-shadow:0 10px 24px rgba(201,63,98,0.18);
+  }
+  .song-box iframe{
+    width:100%;
+    height:170px;
+    border:none;
+    border-radius:14px;
+  }
+
+  /* ---------- Quiz ---------- */
+  .question{
+    font-size:20px;
+    max-width:340px;
+    line-height:1.4;
+  }
+  .progress-dots{
+    display:flex;
+    gap:8px;
+  }
+  .dot{
+    width:8px; height:8px; border-radius:50%;
+    background:#f3cdd6;
+    transition:background 0.3s ease, transform 0.3s ease;
+  }
+  .dot.done{ background:var(--rose); transform:scale(1.2); }
+
+  /* ---------- Reveal ---------- */
+  .message-card{
+    background:var(--white);
+    border-radius:24px;
+    padding:28px 26px;
+    max-width:360px;
+    box-shadow:0 12px 30px rgba(201,63,98,0.15);
+    font-size:16px;
+    line-height:1.6;
+    color:#5c3a4b;
+  }
+  .message-card b{ color:var(--rose-deep); }
+
+  .yn-row{
+    position:relative;
+    display:flex;
+    gap:16px;
+    align-items:center;
+    justify-content:center;
+    width:100%;
+    height:70px;
+  }
+  #noBtn{
+    background:var(--white);
+    color:#a5798a;
+    box-shadow:0 4px 0 #e8c9c0;
+    position:relative;
+    transition:transform 0.18s ease;
+  }
+  #yesBtn{ font-size:calc(16px + var(--grow, 0) * 2px); }
+
+  /* ---------- Final ---------- */
+  .final-msg{
+    font-size:22px;
+    max-width:320px;
+    line-height:1.5;
+  }
+  .heart-burst{
+    font-size:44px;
+  }
+
+  .confetti{
+    position:fixed;
+    top:-40px;
+    font-size:20px;
+    pointer-events:none;
+    animation: fall linear forwards;
+    z-index:5;
+  }
+  .confetti img{ width:26px; height:26px; object-fit:contain; }
+  @keyframes fall{
+    to{ transform:translateY(110vh) rotate(360deg); opacity:0.2; }
+  }
+
+  /* ---------- XOX game ---------- */
+  .ttt-board{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:8px;
+    width:240px;
+  }
+  .ttt-cell{
+    aspect-ratio:1/1;
+    background:var(--white);
+    border-radius:14px;
+    box-shadow:0 4px 0 #e8c9c0;
+    font-family:'Baloo 2', sans-serif;
+    font-size:32px;
+    font-weight:700;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:var(--rose-deep);
+    padding:0;
+  }
+  .ttt-cell:disabled{ cursor:default; }
+  .ttt-cell:not(:disabled):hover{ background:var(--rose-light); }
+  .ttt-cell.win-heart{
+    background:var(--rose-light);
+    animation:heartPop 0.4s ease;
+  }
+  @keyframes heartPop{
+    0%{ transform:scale(0.7); }
+    60%{ transform:scale(1.15); }
+    100%{ transform:scale(1); }
+  }
+  .ttt-status{
+    font-family:'Baloo 2', sans-serif;
+    font-size:15px;
+    color:var(--rose-deep);
+    min-height:20px;
+  }
+
+  /* ---------- Letter / envelope ---------- */
+  .envelope{
+    position:relative;
+    width:180px;
+    height:120px;
+    cursor:pointer;
+  }
+  .envelope .body{
+    position:absolute;
+    inset:0;
+    background:var(--rose-light);
+    border-radius:10px;
+    box-shadow:0 8px 20px rgba(201,63,98,0.2);
+  }
+  .envelope .flap{
+    position:absolute;
+    top:0; left:0; right:0;
+    height:0;
+    border-left:90px solid transparent;
+    border-right:90px solid transparent;
+    border-top:66px solid #ffc4d3;
+    transform-origin:top;
+    transition:transform 0.5s ease;
+    z-index:2;
+  }
+  .envelope.open .flap{ transform:rotateX(180deg); }
+  .envelope .seal{
+    position:absolute;
+    top:44px; left:50%;
+    transform:translateX(-50%);
+    font-size:26px;
+    z-index:3;
+  }
+  .envelope-hint{
+    font-size:13px;
+    color:#a5798a;
+  }
+  .letter-card{
+    display:none;
+    background:var(--white);
+    border-radius:20px;
+    padding:26px 24px;
+    max-width:360px;
+    box-shadow:0 12px 30px rgba(201,63,98,0.15);
+    font-size:15px;
+    line-height:1.7;
+    color:#5c3a4b;
+    text-align:left;
+  }
+  .letter-card.show{ display:block; }
+  .letter-sticker{
+    display:none;
+    width:110px;
+  }
+  .letter-sticker.show{ display:block; }
+
+  @media (prefers-reduced-motion: reduce){
+    .scene{ transition:none; }
+    #meterFill{ transition:none; }
+    .confetti{ display:none; }
+    .envelope .flap{ transition:none; }
+    .corner-sticker, .bg-hearts span, .bg-hearts img, .title.sparkle, .spark{ animation:none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-hearts" aria-hidden="true">
+  <span style="left:6%; animation-duration:9s; animation-delay:0s;">💗</span>
+  <span style="left:18%; animation-duration:12s; animation-delay:2s; font-size:14px;">💕</span>
+  <span style="left:32%; animation-duration:10s; animation-delay:4s;">✨</span>
+  <span style="left:46%; animation-duration:13s; animation-delay:1s; font-size:15px;">💖</span>
+  <span style="left:60%; animation-duration:11s; animation-delay:3s;">💗</span>
+  <span style="left:72%; animation-duration:14s; animation-delay:5s; font-size:14px;">💕</span>
+  <span style="left:85%; animation-duration:10s; animation-delay:2.5s;">✨</span>
+  <span style="left:94%; animation-duration:12.5s; animation-delay:0.5s; font-size:16px;">💘</span>
+  <img src="https://media.giphy.com/media/gfBGaEKYFQ7Ys4OdLh/giphy.gif" style="left:12%; animation-duration:15s; animation-delay:1.5s;" alt="">
+  <img src="https://media.giphy.com/media/aZR0etkZZYdl1GphOW/giphy.gif" style="left:52%; animation-duration:16s; animation-delay:3.5s;" alt="">
+  <img src="https://media.giphy.com/media/1oPXuHfr7oA5MsesEl/giphy.gif" style="left:80%; animation-duration:17s; animation-delay:0.8s;" alt="">
+</div>
+
+<div class="stage">
+
+  <!-- SCENE 1: INTRO -->
+  <section class="scene active" id="scene-intro">
+    <img class="corner-sticker tl" src="https://media.giphy.com/media/gfBGaEKYFQ7Ys4OdLh/giphy.gif" alt="">
+    <img class="corner-sticker tr" src="https://media.giphy.com/media/aZR0etkZZYdl1GphOW/giphy.gif" alt="">
+    <div class="sparkle-wrap">
+      <span class="spark" style="top:-10px; left:-18px; animation-delay:0s;">✨</span>
+      <span class="spark" style="top:-6px; right:-20px; animation-delay:0.8s;">✨</span>
+      <h1 class="title sparkle" style="font-size:42px;">给小璘的一封信 💌</h1>
+    </div>
+    <button onclick="goTo('song')">让我们开始吧 ✨</button>
+  </section>
+
+  <!-- SCENE 1.4: SONG -->
+  <section class="scene" id="scene-song">
+    <img class="corner-sticker tl" src="https://media.giphy.com/media/1oPXuHfr7oA5MsesEl/giphy.gif" alt="">
+    <div class="eyebrow">在开始之前……</div>
+    <h2 class="title sparkle" style="font-size:22px;">🎵 给你的一首歌</h2>
+    <div class="song-box" id="songBox">
+      <div style="width:100%; max-width:560px; margin:0 auto;">
+        <audio id="songPlayer" preload="auto" controls style="width:100%;">
+          <source src="https://raw.githubusercontent.com/afalpudy/Senin-i-in/main/music.mp3" type="audio/mpeg">
+        </audio>
+        <div id="audioStatus" style="display:none;"></div>
+      </div>
+      <button id="playSongBtn" onclick="playMP3()" style="margin-top:14px;">▶ 播放歌曲</button>
+    </div>
+
+    <p class="question" id="questionText"></p>
+    <div class="options" id="optionsWrap"></div>
+  
+    <button id="xoxNextBtn" onclick="goTo('xox')" style="
+      display:block;
+      width:100%;
+      max-width:360px;
+      margin:22px auto 0;
+      padding:15px 22px;
+      border:0;
+      border-radius:999px;
+      font-size:16px;
+      font-weight:700;
+      cursor:pointer;
+    ">
+      来玩 XOX 吧 ❤️
+    </button>
+</section>
+
+  <!-- SCENE 3: REVEAL (message + yes/no) -->
+  <section class="scene" id="scene-reveal">
+    <img class="corner-sticker tr" src="https://media.giphy.com/media/iweiYz7dASKc5a6VoS/giphy.gif" alt="">
+    <div class="heart-burst">💗</div>
+    <div class="message-card" id="messageCard"></div>
+    <div class="yn-row" id="ynRow">
+      <button id="yesBtn" onclick="goTo('xox')">好呀，我愿意！🥺</button>
+      <button id="noBtn">还是先不要啦</button>
+    </div>
+  </section>
+
+  <!-- SCENE 4: XOX -->
+  <section class="scene" id="scene-xox">
+    <div class="heart-burst">❌⭕💗</div>
+    <div class="eyebrow">一个小游戏</div>
+    <h2 class="title sparkle" style="font-size:28px;">来玩一局 XOX 吧 😆</h2>
+    <p class="ttt-status" id="tttStatus">你先开始（X）</p>
+    <div class="ttt-board" id="tttBoard"></div>
+    <button id="tttNextBtn" onclick="goTo('final')" style="display:none;">继续吧 💌</button>
+  </section>
+
+  <!-- SCENE 5: FINAL -->
+  <section class="scene" id="scene-final">
+    <img class="corner-sticker tl" src="https://media.giphy.com/media/SYZ5yGmIDvzJdcbJWm/giphy.gif" alt="">
+    <img class="corner-sticker tr" src="https://media.giphy.com/media/3ov9k67EjtsH4n8520/giphy.gif" alt="">
+    <div class="heart-burst">🎉💖</div>
+    <p class="final-msg" id="finalMsg"></p>
+    <button onclick="goTo('letter')">还有一样东西给你 💌</button>
+  </section>
+
+  <!-- SCENE 6: SURPRISE LETTER -->
+  <section class="scene" id="scene-letter">
+    <div class="envelope" id="envelope" onclick="openLetter()">
+      <div class="flap"></div>
+      <div class="seal">💗</div>
+      <div class="body"></div>
+    </div>
+    <div class="envelope-hint" id="envelopeHint">点击打开信封 💌</div>
+    <div class="letter-card" id="letterCard"></div>
+    <img class="letter-sticker" id="letterSticker" src="https://media.giphy.com/media/1oPXuHfr7oA5MsesEl/giphy.gif" alt="">
+  </section>
+
+</div>
+
+
+<script>
+  /* ======= EDIT BAGIAN INI SESUAI KEBUTUHANMU ======= */
+  const CONFIG = {
+    partnerName: "小璘",
+    senderName: "afal",
+    questions: [
+      {
+        text: "如果你一天里总会突然想起一个人，通常是因为……",
+        options: ["你突然想念他了", "你想起了和他一起经历的有趣事情", "因为那个人不知不觉已经一直出现在你的脑海里"]
+      },
+      {
+        text: "你觉得，如果一个人总是秒回你的消息，这意味着什么？",
+        options: ["他真的很在乎你", "他只是一直在线", "也许他正在等某个人的消息"]
+      },
+      {
+        text: "如果可以把一个回忆重新经历很多次，你会选择哪一个？",
+        options: ["让你开怀大笑的回忆", "让你心跳加速的回忆", "和对的人在一起的回忆"]
+      }
+    ],
+    revealMessage: `小璘，<b>我有件事想告诉你……</b> 💗<br><br>
+      谢谢你走进我的生命。<br><br>
+      因为有你，连平凡的日子也变得更美好。<br><br>
+      所以……<br>
+      <b>你愿意做我的 Valentine 吗？</b> 💌`,
+    finalMessage: `太好了！🎉<br>
+      谢谢你愿意接受我。<br><br>
+      希望从今以后<br>
+      我们也能一起留下许多美好的回忆。<br><br>
+      情人节快乐 💌<br>
+      — afal`,
+    letterMessage: `小璘：<br><br>
+      其实，我一直不知道该怎么把自己的心意好好地告诉你。<br>
+      认识你以后，我越来越喜欢和你聊天，<br>
+      也喜欢和你分享生活里那些小小的事情。<br><br>
+      你可能不知道，<br>
+      但你的出现真的让我的日子变得特别了一点。<br>
+      有时候只是看到你的消息，<br>
+      我的心情都会突然变好。<br><br>
+      所以，我做了这个小小的网站送给你。<br>
+      没有什么特别复杂的理由，<br>
+      只是想认真地给你准备一点属于你的惊喜。<br><br>
+      希望你看到这里的时候，<br>
+      能够开心地笑一下。<br><br>
+      谢谢你出现在我的生活里。<br>
+      希望以后，我们还能一起留下更多美好的回忆。<br><br>
+      这份小小的心意，送给你。💗<br><br>
+      —— afal`,
+    youtubeVideoId: ""
+  };
+  /* ==================================================== */
+
+  let progress = 0;
+  const totalQ = CONFIG.questions.length;
+
+  function goTo(scene){
+    const target = document.getElementById('scene-' + scene);
+    if(!target) return;
+
+    document.querySelectorAll('.scene').forEach(s => s.classList.remove('active'));
+    target.classList.add('active');
+
+    if(scene === 'song') startSong();
+    if(scene === 'quiz') renderQuestion(0);
+    if(scene === 'reveal') {
+      renderReveal();
+      launchConfetti(['✨','💗','💫'], 14);
+    }
+    if(scene === 'xox') initTTT();
+    if(scene === 'final') renderFinal();
+  }
+
+  function startSong(){
+    launchConfetti(['🎵','✨','💗'], 10);
+  }
+
+  function playMP3(){
+    const audio = document.getElementById('songPlayer');
+    const btn = document.getElementById('playSongBtn');
+    const status = document.getElementById('audioStatus');
+
+    if(!audio) return;
+
+    if(audio.error){
+      if(status) status.textContent = 'Musik tidak ditemukan. Pastikan file music.mp3 berada di folder yang sama dengan file HTML.';
+      return;
+    }
+
+    if(audio.paused){
+      const promise = audio.play();
+      if(promise){
+        promise.then(() => {
+          if(btn) btn.textContent = '❚❚ 暂停歌曲';
+          if(status) status.textContent = '';
+        }).catch(() => {
+          if(btn) btn.textContent = '▶ 播放歌曲';
+          if(status) status.textContent = '';
+        });
+      }
+    } else {
+      audio.pause();
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const audio = document.getElementById('songPlayer');
+    const status = document.getElementById('audioStatus');
+
+    if(!audio) return;
+
+    audio.addEventListener('loadeddata', () => {
+      if(status) status.textContent = '';
+    });
+
+    audio.addEventListener('canplaythrough', () => {
+      if(status) status.textContent = '';
+    });
+
+    audio.addEventListener('error', () => {
+      if(status) status.textContent = "music.mp3 tidak ditemukan. Pastikan file bernama music.mp3 berada satu folder dengan file HTML.";
+    });
+
+    audio.addEventListener('play', () => {
+      const btn = document.getElementById('playSongBtn');
+      if(btn) btn.textContent = '❚❚ 暂停歌曲';
+    });
+
+    audio.addEventListener('pause', () => {
+      const btn = document.getElementById('playSongBtn');
+      if(btn) btn.textContent = '▶ 播放歌曲';
+    });
+  });
+
+  let qIndex = 0;
+  function renderQuestion(i){
+    qIndex = i;
+    const q = CONFIG.questions[i];
+    document.getElementById('questionText').textContent = q.text;
+    const wrap = document.getElementById('optionsWrap');
+    wrap.innerHTML = '';
+    q.options.forEach(opt => {
+      const btn = document.createElement('button');
+      btn.className = 'opt-btn';
+      btn.textContent = opt;
+      btn.onclick = () => answer(i);
+      wrap.appendChild(btn);
+    });
+    for(let d=0; d<totalQ; d++){
+      const dot = document.getElementById('dot'+d);
+      if(dot) dot.classList.toggle('done', d < i);
+    }
+  }
+
+  function answer(i){
+    progress = Math.round(((i+1)/totalQ) * 100);
+    const fillEl = document.getElementById('meterFill');
+    if(fillEl) fillEl.style.transform = `translateY(${100 - progress}%)`;
+    const meterLabel = document.getElementById('meterLabel');
+    if(meterLabel) meterLabel.textContent = `心动指数： ${progress}%`;
+    const dot = document.getElementById('dot'+i);
+    if(dot) dot.classList.add('done');
+
+    setTimeout(() => {
+      if(i + 1 < totalQ){
+        renderQuestion(i+1);
+      } else {
+        goTo('reveal');
+      }
+    }, 450);
+  }
+
+  function renderReveal(){
+    const msg = CONFIG.revealMessage
+      .replace('PARTNER', CONFIG.partnerName)
+      .replace('SENDER', CONFIG.senderName);
+    document.getElementById('messageCard').innerHTML = msg;
+    setupDodgeButton();
+  }
+
+  function renderFinal(){
+    const msg = CONFIG.finalMessage
+      .replace('PARTNER', CONFIG.partnerName)
+      .replace('SENDER', CONFIG.senderName);
+    document.getElementById('finalMsg').innerHTML = msg;
+    launchConfetti(['💖','💗','💕','💘','✨','🎉'], 30);
+  }
+
+  /* ---------- XOX (tic-tac-toe) ---------- */
+  let tttCells = [];
+  let tttOver = false;
+  const WIN_LINES = [
+    [0,1,2],[3,4,5],[6,7,8],
+    [0,3,6],[1,4,7],[2,5,8],
+    [0,4,8],[2,4,6]
+  ];
+
+  function initTTT(){
+    tttCells = Array(9).fill(null);
+    tttOver = false;
+    document.getElementById('tttStatus').textContent = '你先开始（X）';
+    document.getElementById('tttNextBtn').style.display = 'none';
+
+    const board = document.getElementById('tttBoard');
+    board.innerHTML = '';
+    for(let i=0; i<9; i++){
+      const btn = document.createElement('button');
+      btn.className = 'ttt-cell';
+      btn.onclick = () => playerMove(i);
+      board.appendChild(btn);
+    }
+  }
+
+  function renderTTT(){
+    const board = document.getElementById('tttBoard');
+    [...board.children].forEach((cell, i) => {
+      cell.textContent = tttCells[i] || '';
+      cell.disabled = !!tttCells[i] || tttOver;
+    });
+  }
+
+  function playerMove(i){
+    if(tttOver || tttCells[i]) return;
+    tttCells[i] = 'X';
+    renderTTT();
+    const result = checkTTT();
+    if(result){ endTTT(result); return; }
+    document.getElementById('tttStatus').textContent = '轮到我了……';
+    setTimeout(computerMove, 500);
+  }
+
+  function computerMove(){
+    if(tttOver || !document.getElementById('scene-xox').classList.contains('active')) return;
+    const empty = tttCells.map((v,i)=>v?null:i).filter(v=>v!==null);
+    if(empty.length === 0) return;
+    const pick = empty[Math.floor(Math.random()*empty.length)];
+    tttCells[pick] = 'O';
+    renderTTT();
+    const result = checkTTT();
+    if(result){ endTTT(result); return; }
+    document.getElementById('tttStatus').textContent = '轮到你了（X）';
+  }
+
+  function checkTTT(){
+    for(const line of WIN_LINES){
+      const [a,b,c] = line;
+      if(tttCells[a] && tttCells[a] === tttCells[b] && tttCells[a] === tttCells[c]){
+        return { winner: tttCells[a], line };
+      }
+    }
+    if(tttCells.every(v => v)) return { winner: 'draw', line: null };
+    return null;
+  }
+
+  function endTTT(result){
+    tttOver = true;
+    renderTTT();
+    const status = document.getElementById('tttStatus');
+    if(result.winner === 'X'){
+      status.textContent = '你赢啦！🎉';
+      const board = document.getElementById('tttBoard');
+      result.line.forEach(i => {
+        const cell = board.children[i];
+        cell.textContent = '💗';
+        cell.classList.add('win-heart');
+      });
+      launchConfetti(['💗','✨','🎉'], 18);
+    }
+    else if(result.winner === 'O') status.textContent = '这次是我赢了 😆';
+    else status.textContent = '平局！🤝';
+    document.getElementById('tttNextBtn').style.display = 'inline-block';
+  }
+
+  /* ---------- Surprise letter ---------- */
+  function openLetter(){
+    const envelope = document.getElementById('envelope');
+    if(envelope.classList.contains('open')) return;
+    envelope.classList.add('open');
+    document.getElementById('envelopeHint').style.display = 'none';
+
+    const letterMsg = CONFIG.letterMessage
+      .replace(/PARTNER/g, CONFIG.partnerName)
+      .replace(/SENDER/g, CONFIG.senderName);
+
+    setTimeout(() => {
+      const card = document.getElementById('letterCard');
+      card.innerHTML = letterMsg;
+      card.classList.add('show');
+      document.getElementById('letterSticker').classList.add('show');
+      launchConfetti(['💌','💗','✨','💕'], 24);
+    }, 550);
+  }
+
+  /* ---------- "No" button dodges the cursor ---------- */
+  let dodgeCount = 0;
+  function setupDodgeButton(){
+    const noBtn = document.getElementById('noBtn');
+    const row = document.getElementById('ynRow');
+    noBtn.style.position = 'static';
+
+    function dodge(){
+      dodgeCount++;
+      const rowRect = row.getBoundingClientRect();
+      const maxX = Math.max(rowRect.width - 140, 40);
+      const maxY = 160;
+      const x = (Math.random() - 0.5) * maxX;
+      const y = (Math.random() - 0.5) * maxY;
+      noBtn.style.position = 'relative';
+      noBtn.style.transform = `translate(${x}px, ${y}px)`;
+
+      const yesBtn = document.getElementById('yesBtn');
+      const grow = Math.min(dodgeCount, 6);
+      yesBtn.style.setProperty('--grow', grow);
+
+      const shrink = Math.max(1 - dodgeCount * 0.06, 0.55);
+      noBtn.style.fontSize = (16 * shrink) + 'px';
+    }
+
+    noBtn.addEventListener('mouseenter', dodge);
+    noBtn.addEventListener('touchstart', (e) => { e.preventDefault(); dodge(); }, {passive:false});
+    noBtn.addEventListener('click', (e) => { e.preventDefault(); dodge(); });
+  }
+
+  /* ---------- confetti / sparkle burst (reusable) ---------- */
+  function launchConfetti(items, count){
+    items = items || ['💖','💗','💕','💘','✨'];
+    count = count || 26;
+    for(let i=0; i<count; i++){
+      setTimeout(() => {
+        const el = document.createElement('div');
+        el.className = 'confetti';
+        el.textContent = items[Math.floor(Math.random()*items.length)];
+        el.style.left = Math.random()*100 + 'vw';
+        el.style.animationDuration = (2.5 + Math.random()*2) + 's';
+        document.body.appendChild(el);
+        setTimeout(() => el.remove(), 5000);
+      }, i * 80);
+    }
+  }
+
+let xoxBoard = Array(9).fill("");
+let xoxGameOver = false;
+
+function initXOX(){
+  const board = document.getElementById("xoxBoard");
+  if(!board) return;
+  board.innerHTML = "";
+  xoxBoard.forEach((cell, i) => {
+    const b = document.createElement("button");
+    b.textContent = cell;
+    b.style.cssText = "aspect-ratio:1;border:0;border-radius:14px;font-size:34px;font-weight:800;cursor:pointer;background:#fff0f4;color:#7a2940;";
+    b.onclick = () => xoxMove(i);
+    board.appendChild(b);
+  });
+  const status = document.getElementById("xoxStatus");
+  if(status) status.textContent = "你是 X，先手是你 ❤️";
+}
+
+function xoxMove(i){
+  if(xoxGameOver || xoxBoard[i]) return;
+  xoxBoard[i] = "X";
+  renderXOX();
+  if(checkXOX("X")){
+    endXOX("Kazandın! 🥹❤️");
+    return;
+  }
+  if(xoxBoard.every(Boolean)){
+    endXOX("平局！😆");
+    return;
+  }
+
+  const empty = xoxBoard.map((v,idx)=>v ? -1 : idx).filter(v=>v>=0);
+  const ai = empty[Math.floor(Math.random()*empty.length)];
+  xoxBoard[ai] = "O";
+  renderXOX();
+
+  if(checkXOX("O")) endXOX("这次是我赢了 😌");
+  else if(xoxBoard.every(Boolean)) endXOX("平局！😆");
+}
+
+function checkXOX(mark){
+  return [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]]
+    .some(([a,b,c]) => xoxBoard[a]===mark && xoxBoard[b]===mark && xoxBoard[c]===mark);
+}
+
+function renderXOX(){
+  const board = document.getElementById("xoxBoard");
+  if(!board) return;
+  [...board.children].forEach((b,i)=>b.textContent=xoxBoard[i]);
+}
+
+function endXOX(msg){
+  xoxGameOver = true;
+  const status = document.getElementById("xoxStatus");
+  const cont = document.getElementById("xoxContinue");
+  if(status) status.textContent = msg;
+  if(cont) cont.style.display = "block";
+}
+
+function resetXOX(){
+  xoxBoard = Array(9).fill("");
+  xoxGameOver = false;
+  const cont = document.getElementById("xoxContinue");
+  if(cont) cont.style.display = "none";
+  initXOX();
+}
+
+
+const oldGoTo = window.goTo;
+if (typeof oldGoTo === "function") {
+  window.goTo = function(id){
+    oldGoTo(id);
+    if(id === "xox") initXOX();
+  };
+}
+</script>
+
+</body>
+</html>
