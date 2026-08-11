@@ -385,27 +385,84 @@
     margin-top:-8px;
   }
 
-  /* ===== SURAT UNTUK 小璘 ===== */
+  /* ===== SURAT UNTUK 小璘 — FIX TAMPILAN SAJA ===== */
   #scene-letter{
+    position:absolute;
+    inset:0;
     width:100%;
-    min-height:100%;
+    min-height:0;
     height:100%;
     box-sizing:border-box;
-    gap:14px;
-    padding:28px 18px 120px;
+    display:none;
+    flex-direction:column;
+    align-items:center;
+    justify-content:flex-start;
+    gap:18px;
+    padding:28px 18px calc(60px + env(safe-area-inset-bottom));
     overflow-y:auto;
     overflow-x:hidden;
-    justify-content:flex-start;
-    align-items:center;
     -webkit-overflow-scrolling:touch;
-    overscroll-behavior-y:contain;
+    overscroll-behavior:contain;
+  }
+
+  #scene-letter.active{
+    display:flex;
+  }
+
+  .envelope{
+    position:relative;
+    width:180px;
+    height:120px;
+    cursor:pointer;
+    flex:0 0 auto;
+    transition:transform .35s ease, opacity .35s ease;
+  }
+  .envelope.open{
+    transform:translateY(-8px) scale(.96);
+    opacity:.2;
+    pointer-events:none;
+  }
+  .envelope .body{
+    position:absolute;
+    inset:0;
+    background:linear-gradient(145deg,#ffdce5,#ffc8d7);
+    border-radius:12px;
+    box-shadow:0 12px 30px rgba(201,63,98,.18);
+  }
+  .envelope .flap{
+    position:absolute;
+    left:0;
+    top:0;
+    width:0;
+    height:0;
+    border-left:90px solid transparent;
+    border-right:90px solid transparent;
+    border-top:62px solid #f4a7bc;
+    transform-origin:top center;
+    transition:transform .5s ease;
+    z-index:2;
+  }
+  .envelope.open .flap{ transform:rotateX(180deg); }
+  .envelope .seal{
+    position:absolute;
+    left:50%;
+    top:52%;
+    transform:translate(-50%,-50%);
+    font-size:28px;
+    z-index:3;
+  }
+  .envelope-hint{
+    font-size:14px;
+    color:#9a6175;
+    margin-top:-8px;
+    flex:0 0 auto;
   }
 
   .letter-card{
     display:none;
-    width:clamp(300px, 92vw, 720px);
-    min-height:0;
+    width:min(92vw,720px);
     height:auto;
+    min-height:0;
     max-height:none;
     box-sizing:border-box;
     overflow:visible;
@@ -424,6 +481,7 @@
     font-family:"Noto Sans SC","Microsoft YaHei","PingFang SC",sans-serif;
     font-size:17px;
     position:relative;
+    margin:0 auto;
   }
 
   .letter-card.show{
@@ -517,123 +575,39 @@
     to{opacity:1; transform:translateY(0) scale(1);}
   }
 
-  .letter-sticker{display:none; width:90px; flex:0 0 auto;}
+  .letter-sticker{
+    display:none;
+    width:90px;
+    flex:0 0 auto;
+  }
   .letter-sticker.show{display:block;}
 
   @media (max-width:520px){
     #scene-letter{
-      padding:20px 12px 120px;
       gap:10px;
+      padding:20px 12px calc(70px + env(safe-area-inset-bottom));
       justify-content:flex-start;
+      overflow-y:auto;
     }
+
     .letter-card{
       width:94vw;
+      height:auto;
       min-height:0;
-      padding:30px 22px 28px;
+      max-height:none;
+      overflow:visible;
+      padding:30px 22px 34px;
       font-size:15px;
       line-height:1.9;
       border-radius:24px;
     }
+
     .letter-title{font-size:22px;}
     .letter-to{font-size:11px; margin-bottom:24px;}
     .letter-greeting{font-size:18px; margin-bottom:18px;}
     .letter-card p{margin-bottom:17px;}
     .letter-divider{margin:20px 4px;}
     .letter-sign{font-size:15px; margin-top:24px;}
-  }
-
-  .letter-sticker{
-    display:none;
-    width:90px;
-    flex:0 0 auto;
-  }
-  .letter-sticker.show{ display:block; }
-
-  #scene-letter{
-    gap:18px;
-    width:100%;
-    padding-left:28px;
-    padding-right:28px;
-    padding-bottom:120px;
-    justify-content:flex-start;
-  }
-
-  #scene-letter .letter-card{
-    flex:0 0 auto;
-    height:auto;
-    min-height:max-content;
-    max-height:none;
-    overflow:visible;
-  }
-
-  @media (max-width:520px){
-    .letter-card{
-      width:min(100%, 94vw);
-      height:auto;
-      min-height:max-content;
-      max-height:none;
-      padding:28px 24px 26px;
-      font-size:14px;
-      line-height:1.9;
-      border-radius:22px;
-    }
-    .letter-title{font-size:21px;}
-    .letter-to{font-size:12px; margin-bottom:22px;}
-    .letter-greeting{font-size:17px;}
-  }
-
-
-  /* ===== FIX KHUSUS HALAMAN SURAT: SCROLL PENUH DI HP & DESKTOP ===== */
-  body.letter-mode{
-    height:auto;
-    min-height:100vh;
-    overflow-y:auto;
-    overflow-x:hidden;
-    display:block;
-  }
-
-  body.letter-mode .stage{
-    height:auto;
-    min-height:100vh;
-  }
-
-  body.letter-mode #scene-letter{
-    position:relative;
-    inset:auto;
-    display:flex;
-    width:100%;
-    min-height:100vh;
-    height:auto;
-    max-width:none;
-    overflow:visible;
-    justify-content:flex-start;
-    align-items:center;
-    padding-top:28px;
-    padding-bottom:140px;
-  }
-
-  body.letter-mode #scene-letter .letter-card{
-    flex:0 0 auto;
-    width:clamp(300px, 92vw, 720px);
-    height:auto;
-    min-height:0;
-    max-height:none;
-    overflow:visible;
-  }
-
-  @media (max-width:520px){
-    body.letter-mode #scene-letter{
-      padding-top:20px;
-      padding-bottom:140px;
-    }
-
-    body.letter-mode #scene-letter .letter-card{
-      width:94vw;
-      height:auto;
-      min-height:0;
-      max-height:none;
-      overflow:visible;
-    }
   }
 
   @media (prefers-reduced-motion: reduce){
@@ -837,8 +811,6 @@
   function goTo(scene){
     const target = document.getElementById('scene-' + scene);
     if(!target) return;
-
-    document.body.classList.toggle('letter-mode', scene === 'letter');
 
     document.querySelectorAll('.scene').forEach(s => s.classList.remove('active'));
     target.classList.add('active');
@@ -1055,7 +1027,6 @@
 
   /* ---------- Surprise letter ---------- */
   function openLetter(){
-    document.body.classList.add('letter-mode');
     const envelope = document.getElementById('envelope');
     if(envelope.classList.contains('open')) return;
     envelope.classList.add('open');
