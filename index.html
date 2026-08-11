@@ -398,7 +398,7 @@
     align-items:center;
     justify-content:flex-start;
     gap:18px;
-    padding:28px 18px calc(60px + env(safe-area-inset-bottom));
+    padding:110px 18px calc(70px + env(safe-area-inset-bottom));
     overflow-y:auto;
     overflow-x:hidden;
     -webkit-overflow-scrolling:touch;
@@ -407,6 +407,16 @@
 
   #scene-letter.active{
     display:flex;
+  }
+
+  /* sebelum surat dibuka: pusatkan amplop di layar */
+  #scene-letter.active:not(:has(.letter-card.show)){
+    justify-content:center;
+  }
+
+  /* setelah surat dibuka: surat panjang dimulai dari atas dan bisa di-scroll */
+  #scene-letter.active:has(.letter-card.show){
+    justify-content:flex-start;
   }
 
   .envelope{
@@ -585,9 +595,13 @@
   @media (max-width:520px){
     #scene-letter{
       gap:10px;
-      padding:20px 12px calc(70px + env(safe-area-inset-bottom));
+      padding:80px 12px calc(80px + env(safe-area-inset-bottom));
       justify-content:flex-start;
       overflow-y:auto;
+    }
+
+    #scene-letter.active:not(:has(.letter-card.show)){
+      justify-content:center;
     }
 
     .letter-card{
@@ -644,7 +658,7 @@
     <div class="sparkle-wrap">
       <span class="spark" style="top:-10px; left:-18px; animation-delay:0s;">✨</span>
       <span class="spark" style="top:-6px; right:-20px; animation-delay:0.8s;">✨</span>
-      <h1 class="title sparkle" style="font-size:42px;">给小璘的一封信 💌</h1>
+      <h1 class="title sparkle" style="font-size:42px;">给小璘 💌</h1>
     </div>
     <button onclick="goTo('song')">让我们开始吧 ✨</button>
   </section>
@@ -747,16 +761,18 @@
         options: ["让你开怀大笑的回忆", "让你心跳加速的回忆", "和对的人在一起的回忆"]
       }
     ],
-    revealMessage: `小璘，<b>我有件事想告诉你……</b> 💗<br><br>
-      谢谢你走进我的生命。<br><br>
-      因为有你，连平凡的日子也变得更美好。<br><br>
-      所以……<br>
-      <b>你愿意做我的 Valentine 吗？</b> 💌`,
+    revealMessage: `小璘，<b>我有些话想告诉你……</b> 💗<br><br>
+      谢谢你出现在我的生活里。<br><br>
+      认识你以后，我发现自己越来越喜欢和你聊天，也越来越珍惜和你分享生活里的那些小事。<br><br>
+      其实没有什么特别复杂的理由，<br>
+      <b>只是觉得，你对我来说真的很特别。</b> 💗`,
     finalMessage: `太好了！🎉<br>
-      谢谢你愿意接受我。<br><br>
+      谢谢你愿意认真看完这些话。<br><br>
+      其实，我只是想让你知道，<br>
+      你对我来说真的很特别。<br><br>
       希望从今以后<br>
       我们也能一起留下许多美好的回忆。<br><br>
-      情人节快乐 💌<br>
+      谢谢你愿意听我说这些。 💗<br>
       — afal`,
     letterMessage: `
       <div class="letter-title">给小璘的一封信 💗</div>
