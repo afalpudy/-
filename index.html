@@ -390,19 +390,22 @@
     width:100%;
     min-height:100%;
     box-sizing:border-box;
-    gap:14px;
-    padding:28px 18px 34px;
+    gap:18px;
+    padding:34px 18px 50px;
     overflow-y:auto;
+    justify-content:flex-start;
+    align-items:center;
   }
 
   .letter-card{
     display:none;
-    width:clamp(300px, 92vw, 720px);
-    min-height:clamp(420px, 68vh, 650px);
+    width:min(720px, 92vw);
+    min-height:0;
+    height:auto;
     max-height:none;
     box-sizing:border-box;
     overflow:visible;
-    flex:0 0 auto;
+    flex:none;
     background:
       radial-gradient(circle at 8% 5%, rgba(255,210,224,.65), transparent 22%),
       radial-gradient(circle at 95% 95%, rgba(255,225,205,.55), transparent 24%),
@@ -546,14 +549,15 @@
   }
 
   #scene-letter .letter-card{
-    flex:0 1 auto;
+    flex:none;
   }
 
   @media (max-width:520px){
     .letter-card{
       width:min(100%, 94vw);
-      max-height:72vh;
-      padding:28px 24px 26px;
+      max-height:none;
+      height:auto;
+      padding:28px 24px 30px;
       font-size:14px;
       line-height:1.9;
       border-radius:22px;
