@@ -398,7 +398,7 @@
     align-items:center;
     justify-content:flex-start;
     gap:18px;
-    padding:28px 18px calc(60px + env(safe-area-inset-bottom));
+    padding:110px 18px calc(70px + env(safe-area-inset-bottom));
     overflow-y:auto;
     overflow-x:hidden;
     -webkit-overflow-scrolling:touch;
@@ -407,6 +407,16 @@
 
   #scene-letter.active{
     display:flex;
+  }
+
+  /* sebelum surat dibuka: pusatkan amplop di layar */
+  #scene-letter.active:not(:has(.letter-card.show)){
+    justify-content:center;
+  }
+
+  /* setelah surat dibuka: surat panjang dimulai dari atas dan bisa di-scroll */
+  #scene-letter.active:has(.letter-card.show){
+    justify-content:flex-start;
   }
 
   .envelope{
@@ -585,9 +595,13 @@
   @media (max-width:520px){
     #scene-letter{
       gap:10px;
-      padding:20px 12px calc(70px + env(safe-area-inset-bottom));
+      padding:80px 12px calc(80px + env(safe-area-inset-bottom));
       justify-content:flex-start;
       overflow-y:auto;
+    }
+
+    #scene-letter.active:not(:has(.letter-card.show)){
+      justify-content:center;
     }
 
     .letter-card{
