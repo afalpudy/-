@@ -75,7 +75,7 @@
     position:relative;
     z-index:1;
     width:100%;
-    max-width:460px;
+    max-width:760px;
     height:100%;
   }
 
@@ -342,55 +342,226 @@
     width:180px;
     height:120px;
     cursor:pointer;
+    flex:0 0 auto;
+    transition:transform .35s ease, opacity .35s ease;
+  }
+  .envelope.open{
+    transform:translateY(-8px) scale(.96);
+    opacity:.2;
+    pointer-events:none;
   }
   .envelope .body{
     position:absolute;
     inset:0;
-    background:var(--rose-light);
-    border-radius:10px;
-    box-shadow:0 8px 20px rgba(201,63,98,0.2);
+    background:linear-gradient(145deg,#ffdce5,#ffc8d7);
+    border-radius:12px;
+    box-shadow:0 12px 30px rgba(201,63,98,.18);
   }
   .envelope .flap{
     position:absolute;
-    top:0; left:0; right:0;
+    left:0;
+    top:0;
+    width:0;
     height:0;
     border-left:90px solid transparent;
     border-right:90px solid transparent;
-    border-top:66px solid #ffc4d3;
-    transform-origin:top;
-    transition:transform 0.5s ease;
+    border-top:62px solid #f4a7bc;
+    transform-origin:top center;
+    transition:transform .5s ease;
     z-index:2;
   }
   .envelope.open .flap{ transform:rotateX(180deg); }
   .envelope .seal{
     position:absolute;
-    top:44px; left:50%;
-    transform:translateX(-50%);
-    font-size:26px;
+    left:50%;
+    top:52%;
+    transform:translate(-50%,-50%);
+    font-size:28px;
     z-index:3;
   }
   .envelope-hint{
-    font-size:13px;
-    color:#a5798a;
+    font-size:14px;
+    color:#9a6175;
+    margin-top:-8px;
   }
+
+  /* ===== SURAT UNTUK 小璘 ===== */
+  #scene-letter{
+    width:100%;
+    min-height:100%;
+    box-sizing:border-box;
+    gap:14px;
+    padding:28px 18px 34px;
+    overflow-y:auto;
+  }
+
   .letter-card{
     display:none;
-    background:var(--white);
-    border-radius:20px;
-    padding:26px 24px;
-    max-width:360px;
-    box-shadow:0 12px 30px rgba(201,63,98,0.15);
-    font-size:15px;
-    line-height:1.7;
-    color:#5c3a4b;
+    width:clamp(300px, 92vw, 720px);
+    min-height:clamp(420px, 68vh, 650px);
+    max-height:none;
+    box-sizing:border-box;
+    overflow:visible;
+    flex:0 0 auto;
+    background:
+      radial-gradient(circle at 8% 5%, rgba(255,210,224,.65), transparent 22%),
+      radial-gradient(circle at 95% 95%, rgba(255,225,205,.55), transparent 24%),
+      #fffdfd;
+    border:1px solid rgba(232,92,123,.25);
+    border-radius:30px;
+    padding:42px clamp(24px, 6vw, 58px) 40px;
+    box-shadow:0 18px 50px rgba(130,50,85,.18);
+    color:#593c4b;
     text-align:left;
+    line-height:1.95;
+    font-family:"Noto Sans SC","Microsoft YaHei","PingFang SC",sans-serif;
+    font-size:17px;
+    position:relative;
   }
-  .letter-card.show{ display:block; }
+
+  .letter-card.show{
+    display:block;
+    animation:letterIn .55s ease both;
+  }
+
+  .letter-card::before{
+    content:"💌";
+    display:block;
+    text-align:center;
+    font-size:34px;
+    margin-bottom:10px;
+  }
+
+  .letter-card::after{
+    content:"♡";
+    position:absolute;
+    right:24px;
+    bottom:16px;
+    color:#f19ab0;
+    font-size:32px;
+  }
+
+  .letter-title{
+    text-align:center;
+    color:#c93f62;
+    font-size:27px;
+    font-weight:800;
+    margin:0;
+    letter-spacing:.5px;
+  }
+
+  .letter-to{
+    text-align:center;
+    color:#a96a7e;
+    font-size:13px;
+    margin:7px 0 30px;
+    letter-spacing:2px;
+  }
+
+  .letter-greeting{
+    color:#c93f62;
+    font-size:20px;
+    font-weight:800;
+    margin:0 0 22px;
+  }
+
+  .letter-card p{
+    margin:0 0 20px;
+  }
+
+  .letter-card strong{
+    color:#c93f62;
+    font-weight:800;
+  }
+
+  .letter-divider{
+    height:1px;
+    margin:24px 8px;
+    background:linear-gradient(90deg,transparent,#f3b0bf,transparent);
+    position:relative;
+  }
+
+  .letter-divider::after{
+    content:"♥";
+    position:absolute;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%);
+    background:#fffdfd;
+    padding:0 10px;
+    color:#ed86a1;
+    font-size:14px;
+  }
+
+  .letter-wish{
+    margin-top:8px !important;
+  }
+
+  .letter-sign{
+    text-align:right;
+    margin-top:30px;
+    color:#c93f62;
+    font-weight:700;
+    font-size:17px;
+  }
+
+  @keyframes letterIn{
+    from{opacity:0; transform:translateY(20px) scale(.98);}
+    to{opacity:1; transform:translateY(0) scale(1);}
+  }
+
+  .letter-sticker{display:none; width:90px; flex:0 0 auto;}
+  .letter-sticker.show{display:block;}
+
+  @media (max-width:520px){
+    #scene-letter{padding:20px 12px 28px; gap:10px;}
+    .letter-card{
+      width:94vw;
+      min-height:0;
+      padding:30px 22px 28px;
+      font-size:15px;
+      line-height:1.9;
+      border-radius:24px;
+    }
+    .letter-title{font-size:22px;}
+    .letter-to{font-size:11px; margin-bottom:24px;}
+    .letter-greeting{font-size:18px; margin-bottom:18px;}
+    .letter-card p{margin-bottom:17px;}
+    .letter-divider{margin:20px 4px;}
+    .letter-sign{font-size:15px; margin-top:24px;}
+  }
+
   .letter-sticker{
     display:none;
-    width:110px;
+    width:90px;
+    flex:0 0 auto;
   }
   .letter-sticker.show{ display:block; }
+
+  #scene-letter{
+    gap:18px;
+    width:100%;
+    padding-left:28px;
+    padding-right:28px;
+  }
+
+  #scene-letter .letter-card{
+    flex:0 1 auto;
+  }
+
+  @media (max-width:520px){
+    .letter-card{
+      width:min(100%, 94vw);
+      max-height:72vh;
+      padding:28px 24px 26px;
+      font-size:14px;
+      line-height:1.9;
+      border-radius:22px;
+    }
+    .letter-title{font-size:21px;}
+    .letter-to{font-size:12px; margin-bottom:22px;}
+    .letter-greeting{font-size:17px;}
+  }
 
   @media (prefers-reduced-motion: reduce){
     .scene{ transition:none; }
@@ -540,23 +711,49 @@
       我们也能一起留下许多美好的回忆。<br><br>
       情人节快乐 💌<br>
       — afal`,
-    letterMessage: `小璘：<br><br>
-      其实，我一直不知道该怎么把自己的心意好好地告诉你。<br>
-      认识你以后，我越来越喜欢和你聊天，<br>
-      也喜欢和你分享生活里那些小小的事情。<br><br>
-      你可能不知道，<br>
-      但你的出现真的让我的日子变得特别了一点。<br>
-      有时候只是看到你的消息，<br>
-      我的心情都会突然变好。<br><br>
-      所以，我做了这个小小的网站送给你。<br>
+    letterMessage: `
+      <div class="letter-title">给小璘的一封信 💗</div>
+      <div class="letter-to">TO · 小璘</div>
+      <div class="letter-greeting">亲爱的小璘：</div>
+
+      <p>其实，我想了很久，才决定把这些话写下来。</p>
+
+      <p>认识你以后，我发现自己越来越喜欢和你聊天，<br>
+      也越来越珍惜和你分享生活里那些小小的事情。</p>
+
+      <div class="letter-divider"></div>
+
+      <p>有时候，只是一条你的消息，<br>
+      就能让普通的一天突然变得很特别。</p>
+
+      <p>我做这个小小的网站，<br>
       没有什么特别复杂的理由，<br>
-      只是想认真地给你准备一点属于你的惊喜。<br><br>
-      希望你看到这里的时候，<br>
-      能够开心地笑一下。<br><br>
-      谢谢你出现在我的生活里。<br>
-      希望以后，我们还能一起留下更多美好的回忆。<br><br>
-      这份小小的心意，送给你。💗<br><br>
-      —— afal`,
+      只是想用一种属于我的方式，<br>
+      给你准备一份小小的惊喜。</p>
+
+      <div class="letter-divider"></div>
+
+      <p>我不太擅长说很多好听的话，<br>
+      但我想让你知道，<br>
+      <strong>你对我来说，真的很特别。</strong></p>
+
+      <p>谢谢你出现在我的生活里，<br>
+      也谢谢你愿意让我慢慢认识你。</p>
+
+      <div class="letter-divider"></div>
+
+      <p>如果以后还有很多很多天，<br>
+      我希望我们可以一起留下更多美好的回忆。</p>
+
+      <p class="letter-wish">希望你每天都开心，<br>
+      也希望每次看到这封信的时候，<br>
+      你都能感受到我的一点点心意。💗</p>
+
+      <div class="letter-sign">
+        <span>永远真诚地，</span><br>
+        <strong>—— afal ❤️</strong>
+      </div>
+    `,
     youtubeVideoId: ""
   };
   /* ==================================================== */
